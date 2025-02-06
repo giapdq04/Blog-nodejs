@@ -7,17 +7,22 @@
   "type": "commonjs",
   "main": "src/index.js",
   "scripts": {
+    "beautify": "prettier --single-quote --trailing-comma all --write 'src/**/*.{js,json,scss}'",
     "start": "nodemon --inspect src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "sass --watch src/resources/scss:src/public/css"
   },
   "dependencies": {
     "express": "^4.21.2",
-    "express-handlebars": "^8.0.1"
+    "express-handlebars": "^8.0.1",
+    "mongoose": "^8.9.7"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.9",
+    "prettier": "^3.4.2",
     "sass": "^1.83.4"
   }
 }

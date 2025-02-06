@@ -1,8 +1,8 @@
-const express = require('express')
-const router = express.Router()
-const siteCtrl = require('../app/controllers/SiteController')
+const express = require('express');
+const router = express.Router();
+const siteCtrl = require('../app/controllers/SiteController');
 
-router.use('/search', siteCtrl.search)
-router.use('/', siteCtrl.index)
+router.get('/search', siteCtrl.search);
+router.get('/', siteCtrl.index);
 
-module.exports = router
+module.exports = router;

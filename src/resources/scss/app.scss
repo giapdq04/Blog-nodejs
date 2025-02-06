@@ -1,5 +1,5 @@
-@use "variables" as *;
+@use 'variables' as *;
 
 h1 {
-    color: $red-color;
+  color: $red-color;
 }
