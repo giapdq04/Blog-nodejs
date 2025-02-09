@@ -1,4 +1,4 @@
-const { multipleMongooseObject } = require('../../util/mongoose');
+const { multipleMongooseObject, mongooseToObject } = require('../../util/mongoose');
 const Course = require('../models/Course')
 
 class MeController {
@@ -6,7 +6,14 @@ class MeController {
   // [GET] /me/stored/courses
   async storedCourses(req, res, next) {
     try {
-      const courses = await Course.find();
+
+      let courses = await Course.find();
+
+      if (req.query.hasOwnProperty('_sort')) {
+        courses = courses.sort({
+          [req.query.column]: req.query.type
+        })
+      }
 
       const deletedCourses = await Course.countDocumentsWithDeleted(
         { deleted: true }

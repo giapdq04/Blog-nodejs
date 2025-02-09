@@ -6,6 +6,8 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
+const { SortMiddleware } = require('./app/middlewares/SortMiddleware');
+
 const route = require('./routes');
 const db = require('./config/db');
 
@@ -26,6 +28,9 @@ app.use(methodOverride('_method'))
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Custom middlewares
+app.use(SortMiddleware);
+
 //Template engine
 app.engine(
   'hbs',
@@ -33,6 +38,28 @@ app.engine(
     extname: '.hbs',
     helpers: {
       sum: (a, b) => a + b,
+      sortable: (field, sort) => {
+        const sortType = field === sort.column ? sort.type : 'default';
+
+        const icons = {
+          default: '/img/icons/sort.svg',
+          asc: '/img/icons/sort_up.svg',
+          desc: '/img/icons/sort_down.svg',
+        }
+
+        const types = {
+          default: 'desc',
+          asc: 'desc',
+          desc: 'asc',
+        }
+
+        const icon = icons[sortType] || icons.default;
+        const type = types[sortType] || types.default;
+
+        return `<a href="?_sort&column=${field}&type=${type}">
+                        <img src="${icon}" alt="" width="15" height="15">
+                    </a>`
+      }
     }
   }),
 );
